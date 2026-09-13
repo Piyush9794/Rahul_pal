@@ -46,7 +46,13 @@ export default function Footer() {
                 className="inline-flex items-center gap-3 w-fit"
               >
                 <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-black text-white flex items-center justify-center font-bold text-lg">
-                  TP
+                  {/* Brand Logo */}
+                  <img
+                    src="/Logo/Logo4.webp"
+                    alt="The Printing Hub"
+                    className="mt-5 w-48 h-auto object-contain"
+                  />
+
                 </div>
 
                 <span className="text-xl sm:text-2xl font-bold tracking-tight text-gray-900">

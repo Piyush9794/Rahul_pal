@@ -11,9 +11,9 @@ export interface Product {
 export const PRODUCTS: Product[] = [
   {
     id: "photo-mug",
-    name: "Customized Photo Mug",
-    image: "/images/WhiteCup.jpeg",
-    description: "High‑quality ceramic mug with your photo printed on it.",
+    name: "Customized Photo Bottle",
+    image: "/images/Bottole.jpg",
+    description: "High‑quality bottle with your photo printed on it.",
     price: 299,
   },
   {
@@ -32,9 +32,9 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "bottle",
-    name: "Printed Bottle",
-    image: "/images/WhiteCup2.jpeg",
-    description: "Stainless‑steel bottle with your design.",
+    name: "Customized Polo T-Shirt",
+    image: '/images/CustomePolo.jpg',
+    description: "Premium quality personalized t-shirt with custom printing.",
     priceLabel: "Price on Enquiry",
   },
   {

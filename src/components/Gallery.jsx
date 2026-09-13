@@ -1,125 +1,387 @@
 // src/components/Gallery.jsx
-import { useState, useEffect, useRef } from 'react';
-import { X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useState } from 'react';
+import { X, ZoomIn } from 'lucide-react';
 
-const images = [
-  '/images/WhiteCap3.jpeg',
-  '/images/cup.jpeg',
-  '/images/whitecap4.jpeg',
-  '/images/whitecap5.jpeg',
+const products = [
+  {
+    image: '/images/WhiteCup.jpeg',
+    name: 'Custom White Cap',
+    about: 'Premium quality personalized cap with custom printing.',
+    price: '₹299',
+  },
+  {
+    image: '/images/Polo.jpg',
+    name: 'Custom Polo T-shirt',
+    about: 'Premium quality personalized t-shirt with custom printing.',
+    price: '₹499',
+  },
+  {
+    image: '/images/Bottole.jpg',
+    name: 'Custom Bottle',
+    about: 'Premium quality personalized bottle with custom printing.',
+    price: '₹349',
+  },
+  {
+    image: '/images/CustomePolo.jpg',
+    name: 'Custom Polo T-shirt',
+    about: 'Premium quality personalized t-shirt with custom printing.',
+    price: '₹499',
+  },
+  {
+    image: '/images/Botle2.jpg',
+    name: 'Custom Bottle',
+    about: 'Premium quality personalized bottle with custom printing.',
+    price: '₹399',
+  },
+  {
+    image: '/images/YourPolo.jpg',
+    name: 'Custom Polo T-shirt',
+    about: 'Premium quality personalized t-shirt with custom printing.',
+    price: '₹499',
+  },
+  {
+    image: '/images/Polo3.jpg',
+    name: 'Custom Polo T-shirt',
+    about: 'Premium quality personalized t-shirt with custom printing.',
+    price: '₹499',
+  },
+  {
+    image: '/images/Botle2.jpg',
+    name: 'Custom Bottle',
+    about: 'Premium quality personalized bottle with custom printing.',
+    price: '₹399',
+  },
 ];
 
 export default function Gallery() {
   const [lightboxIdx, setLightboxIdx] = useState(null);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [scale, setScale] = useState(1);
-  const sectionRef = useRef(null);
-
-  // Auto-play interval
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
-    }, 3500);
-    return () => clearInterval(timer);
-  }, []);
-
-  const nextSlide = () => setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
-  const prevSlide = () => setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
-
-  // Scroll zoom effect
-  useEffect(() => {
-    const handleScroll = () => {
-      if (!sectionRef.current) return;
-      const rect = sectionRef.current.getBoundingClientRect();
-      const windowHeight = window.innerHeight;
-      
-      // Check if section is in viewport
-      if (rect.top < windowHeight && rect.bottom > 0) {
-        const progress = 1 - (rect.top / windowHeight);
-        // Calculate a scale between 0.95 and 1.1 based on scroll progress
-        const newScale = 0.95 + (progress * 0.15);
-        setScale(Math.min(Math.max(newScale, 0.95), 1.1));
-      }
-    };
-    
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   return (
-    <section id="gallery" ref={sectionRef} className="py-20 bg-gray-50 border-t border-gray-100 overflow-hidden">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 text-center mb-10">
-          Our <span className="text-indigo-600">Gallery</span>
-        </h2>
-        
-        {/* Carousel Container */}
-        <div className="relative rounded-3xl overflow-hidden shadow-2xl bg-black group">
-          <div 
-            className="flex transition-transform duration-1000 ease-[cubic-bezier(0.25,1,0.5,1)]" 
-            style={{ transform: `translateX(-${currentIndex * 100}%)` }}
-          >
-            {images.map((src, i) => (
-              <div key={i} className="w-full shrink-0 relative h-[300px] md:h-[500px] lg:h-[600px] overflow-hidden">
+    <section
+      id="gallery"
+      className="py-16 sm:py-20 bg-gray-50 border-t border-gray-100 overflow-hidden"
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        {/* Heading */}
+        <div className="text-center mb-10 sm:mb-12">
+          <p className="text-indigo-600 font-semibold text-xs sm:text-sm uppercase tracking-widest mb-2">
+            Our Work
+          </p>
+
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900">
+            Our{' '}
+            <span className="text-indigo-600">
+              Gallery
+            </span>
+          </h2>
+
+          <p className="mt-3 text-gray-500 text-sm sm:text-base max-w-xl mx-auto">
+            Explore some of our personalized printing work and
+            premium products.
+          </p>
+        </div>
+
+        {/* Gallery Grid */}
+        <div
+          className="
+            grid
+            grid-cols-2
+            sm:grid-cols-2
+            lg:grid-cols-4
+            gap-3
+            sm:gap-5
+            lg:gap-6
+          "
+        >
+          {products.map((product, i) => (
+            <div
+              key={product.image}
+              className="
+                group
+                relative
+                overflow-hidden
+                rounded-xl
+                sm:rounded-2xl
+                bg-white
+                border
+                border-gray-100
+                shadow-md
+                hover:shadow-2xl
+                hover:-translate-y-1
+                transition-all
+                duration-500
+              "
+            >
+              {/* Image Area */}
+              <div
+                className="
+                  relative
+                  overflow-hidden
+                  cursor-zoom-in
+                  h-[170px]
+                  sm:h-[260px]
+                  lg:h-[320px]
+                "
+                onClick={() => setLightboxIdx(i)}
+              >
                 <img
-                  src={src}
-                  alt={`Gallery ${i + 1}`}
-                  className="w-full h-full object-cover cursor-pointer transition-transform duration-75"
-                  style={{ transform: `scale(${scale})` }}
+                  src={product.image}
+                  alt={product.name}
                   loading="lazy"
-                  onClick={() => setLightboxIdx(i)}
+                  className="
+                    w-full
+                    h-full
+                    object-cover
+                    transition-transform
+                    duration-700
+                    ease-out
+                    group-hover:scale-110
+                  "
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"></div>
+
+                {/* Image Overlay */}
+                <div
+                  className="
+                    absolute
+                    inset-0
+                    bg-gradient-to-t
+                    from-black/50
+                    via-transparent
+                    to-transparent
+                    opacity-0
+                    group-hover:opacity-100
+                    transition-opacity
+                    duration-500
+                  "
+                />
+
+                {/* Zoom Icon */}
+                <div
+                  className="
+                    absolute
+                    inset-0
+                    flex
+                    items-center
+                    justify-center
+                    pointer-events-none
+                  "
+                >
+                  <div
+                    className="
+                      w-9 h-9
+                      sm:w-12 sm:h-12
+                      rounded-full
+                      bg-white/90
+                      backdrop-blur-sm
+                      flex
+                      items-center
+                      justify-center
+                      text-indigo-600
+                      shadow-xl
+                      opacity-0
+                      scale-75
+                      group-hover:opacity-100
+                      group-hover:scale-100
+                      transition-all
+                      duration-300
+                    "
+                  >
+                    <ZoomIn
+                      size={18}
+                      className="sm:w-5 sm:h-5"
+                    />
+                  </div>
+                </div>
+
+                {/* Price Badge */}
+                <div
+                  className="
+                    absolute
+                    top-2
+                    right-2
+                    sm:top-3
+                    sm:right-3
+                    bg-indigo-600
+                    text-white
+                    px-2
+                    py-1
+                    sm:px-3
+                    sm:py-1.5
+                    rounded-full
+                    text-[10px]
+                    sm:text-sm
+                    font-bold
+                    shadow-lg
+                  "
+                >
+                  {product.price}
+                </div>
               </div>
-            ))}
-          </div>
-          
-          {/* Controls */}
-          <button 
-            onClick={prevSlide}
-            className="absolute top-1/2 left-4 -translate-y-1/2 bg-white/80 hover:bg-white text-gray-900 p-3 rounded-full shadow-lg backdrop-blur-sm transition-all opacity-0 group-hover:opacity-100 focus:opacity-100"
-            aria-label="Previous image"
-          >
-            <ChevronLeft size={24} />
-          </button>
-          <button 
-            onClick={nextSlide}
-            className="absolute top-1/2 right-4 -translate-y-1/2 bg-white/80 hover:bg-white text-gray-900 p-3 rounded-full shadow-lg backdrop-blur-sm transition-all opacity-0 group-hover:opacity-100 focus:opacity-100"
-            aria-label="Next image"
-          >
-            <ChevronRight size={24} />
-          </button>
-          
-          {/* Indicators */}
-          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex space-x-2">
-            {images.map((_, i) => (
-              <button
-                key={i}
-                onClick={() => setCurrentIndex(i)}
-                className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${i === currentIndex ? 'bg-white w-8' : 'bg-white/50 hover:bg-white/80'}`}
-                aria-label={`Go to slide ${i + 1}`}
-              />
-            ))}
-          </div>
+
+              {/* Card Content */}
+              <div className="p-3 sm:p-5">
+
+                {/* Category */}
+                <p
+                  className="
+                    text-[9px]
+                    sm:text-xs
+                    font-semibold
+                    uppercase
+                    tracking-widest
+                    text-indigo-600
+                    mb-1
+                  "
+                >
+                  The Printing Hub
+                </p>
+
+                {/* Product Name */}
+                <h3
+                  className="
+                    text-sm
+                    sm:text-lg
+                    font-bold
+                    text-gray-900
+                    leading-tight
+                    mb-1.5
+                    sm:mb-2
+                  "
+                >
+                  {product.name}
+                </h3>
+
+                {/* About */}
+                <p
+                  className="
+                    text-[10px]
+                    sm:text-sm
+                    text-gray-500
+                    leading-relaxed
+                    line-clamp-2
+                    mb-3
+                    sm:mb-4
+                  "
+                >
+                  {product.about}
+                </p>
+
+                {/* Price */}
+                <div
+                  className="
+                    flex
+                    items-center
+                    justify-between
+                    pt-2.5
+                    sm:pt-3
+                    border-t
+                    border-gray-100
+                  "
+                >
+                  <span className="text-[10px] sm:text-xs text-gray-400">
+                    Starting from
+                  </span>
+
+                  <span
+                    className="
+                      text-base
+                      sm:text-xl
+                      font-extrabold
+                      text-indigo-600
+                    "
+                  >
+                    {product.price}
+                  </span>
+                </div>
+
+              </div>
+            </div>
+          ))}
         </div>
 
         {/* Lightbox */}
         {lightboxIdx !== null && (
-          <div className="fixed inset-0 bg-black/95 flex items-center justify-center z-50 p-4">
+          <div
+            className="
+              fixed
+              inset-0
+              z-50
+              bg-black/95
+              flex
+              items-center
+              justify-center
+              p-4
+            "
+            onClick={() => setLightboxIdx(null)}
+          >
+            {/* Close Button */}
             <button
-              onClick={() => setLightboxIdx(null)}
-              className="absolute top-6 right-6 text-white/70 hover:text-white transition-colors"
+              onClick={(e) => {
+                e.stopPropagation();
+                setLightboxIdx(null);
+              }}
+              className="
+                absolute
+                top-4
+                right-4
+                sm:top-6
+                sm:right-6
+                w-10
+                h-10
+                sm:w-12
+                sm:h-12
+                rounded-full
+                bg-white/10
+                hover:bg-white/20
+                text-white
+                flex
+                items-center
+                justify-center
+                transition-all
+                duration-300
+                z-50
+              "
               aria-label="Close"
             >
-              <X size={32} />
+              <X size={24} />
             </button>
-            <img 
-              src={images[lightboxIdx]} 
-              alt="Enlarged" 
-              className="max-w-full max-h-full rounded-lg shadow-2xl object-contain" 
-            />
+
+            {/* Full Image */}
+            <div
+              className="max-w-5xl w-full flex flex-col items-center"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <img
+                src={products[lightboxIdx].image}
+                alt={products[lightboxIdx].name}
+                className="
+                  max-w-full
+                  max-h-[75vh]
+                  rounded-xl
+                  object-contain
+                  shadow-2xl
+                "
+              />
+
+              {/* Lightbox Info */}
+              <div className="text-center text-white mt-4">
+                <h3 className="text-xl sm:text-2xl font-bold">
+                  {products[lightboxIdx].name}
+                </h3>
+
+                <p className="text-white/60 text-sm mt-1">
+                  {products[lightboxIdx].about}
+                </p>
+
+                <p className="text-indigo-400 text-xl font-bold mt-2">
+                  {products[lightboxIdx].price}
+                </p>
+              </div>
+            </div>
           </div>
         )}
+
       </div>
     </section>
   );

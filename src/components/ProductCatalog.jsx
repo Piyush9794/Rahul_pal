@@ -14,12 +14,25 @@ export default function ProductCatalog() {
 
   const loadProducts = () => {
     try {
-      const local = JSON.parse(localStorage.getItem('local_products') || '[]');
-      setAllProducts([...PRODUCTS, ...local]);
+      const local = JSON.parse(
+        localStorage.getItem('local_products') || '[]'
+      );
+
+      const merged = [...PRODUCTS, ...local];
+
+      const uniqueProducts = merged.filter(
+        (product, index, self) =>
+          index === self.findIndex(
+            (p) => p.id === product.id
+          )
+      );
+
+      setAllProducts(uniqueProducts);
     } catch (e) {
       console.error(e);
     }
   };
+
 
   useEffect(() => {
     loadProducts();
@@ -94,9 +107,9 @@ export default function ProductCatalog() {
           className="flex overflow-x-auto snap-x snap-mandatory hide-scrollbar space-x-6 pb-8 -mx-4 px-4 lg:mx-0 lg:px-0 mx-auto"
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
-          {allProducts.map((p) => (
+          {allProducts.map((p, index) => (
             <div
-              key={p.id}
+              key={`${p.id}-${index}`}
               className="snap-start shrink-0 w-[85vw] sm:w-[320px] bg-white border border-gray-100 rounded-2xl shadow-xl shadow-gray-200/50 overflow-hidden flex flex-col group relative"
             >
               <div className="w-full h-56 overflow-hidden relative bg-gray-100">
