@@ -92,7 +92,7 @@ export default function Hero() {
             "
           >
             <DotLottieReact
-              src="/public/animations/delivery service.lottie"
+              src="/animations/delivery service.lottie"
               loop
               autoplay
             />
